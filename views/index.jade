@@ -1,0 +1,36 @@
+extends layout
+
+block content
+	script(src="/socket.io/socket.io.js")
+	script(src='javascripts/index.js')
+	- myMonth	= parseInt(query.mon);      //new Date().getMonth();
+	h1 2014
+	p  #{myMonth+1}
+
+	button(id="left" to='#{myMonth-1}') <
+	table(id="table" mon='#{myMonth}')
+		tr
+			th M
+			th T
+			th W
+			th T
+			th F
+			th S
+			th(id='sunday') S
+		- var first = new Date(2014,myMonth,1).getDay(); // 月初めの日の曜日(５月の場合、木曜日だから4)
+		- var lastDate = new Date(2014,myMonth+1,0).getDate(); // ５月の最終日
+		- if(first==0) first = 7;
+		- for(var week=0; week<6; week++){
+		tr
+			- for(var i=0; i<7; i++){
+				- date = week*7+i-(first-2)
+				- if(date > 0 && date <= lastDate)
+					td(id='2014-#{myMonth}-#{date+1}') #{date}
+				- else
+					td
+			- }
+		- }
+	button(id="right" to='#{myMonth+1}') >
+
+
+		
